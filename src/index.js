@@ -4,16 +4,17 @@ import { generateCanvas } from './utils/canvas';
 import './utils/math'
 
 function init() {
-  const previous = document.getElementById('stage')
+  const previous = document.getElementsByTagName('canvas')
   if(previous) {
-    previous.parentNode.removeChild(previous)
+    Array.from(previous).forEach(node => node.parentNode.removeChild(previous))
   }
-
-  const canvas = generateCanvas(800, 600)
+  const canvas = generateCanvas(800, 600, 'stage')
+  const background = generateCanvas(800, 600, 'background')
 
   document.body.insertBefore(canvas, document.body.firstChild)
+  document.body.insertBefore(background, document.body.firstChild)
 
-  App.start(canvas, 60, true)
+  App.start(canvas, background, 60, true)
 
   let timer
   canvas.addEventListener('mousemove',function() {

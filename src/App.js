@@ -8,15 +8,16 @@ import Background from './presentation/background'
 let activeApp
 
 export default class App {
-  static start(canvas, targetFPS, showFPS) {
-    const app = activeApp = new App(canvas, targetFPS, showFPS)
+  static start(canvas, background, targetFPS, showFPS) {
+    const app = activeApp = new App(canvas, background, targetFPS, showFPS)
 
+    app.update()
     app.tick()
 
     return app
   }
 
-  constructor(canvas, targetFPS, showFPS = false) {
+  constructor(canvas, background, targetFPS, showFPS = false) {
     this.targetFPS = targetFPS
     this.showFPS = showFPS
 
@@ -24,23 +25,28 @@ export default class App {
     this.ctx = this.viewport.getContext('2d')
 
     this.world = new World(this)
-    this.background = new Background(this)
+    this.background = new Background(this, background)
     this.commands = new Commands(this)
     this.renderer = new Renderer(this)
     this.registry = new EntitiesRegistry(this)
+
+    this.lastRun
+  }
+
+  update(tframe = window.performance.now()) {
+    requestAnimationFrame(tframe => this.update(tframe))
+    if(!this.lastRun || tframe - this.lastRun > 8) {
+      this.lastRun = tframe
+      this.commands.update()
+      this.registry.update()
+    }
   }
 
   tick() {
-    let lastRun
     const loop = new Loop(this, (before, now) => {
-      if(!lastRun || now - lastRun > 8) {
-        this.background.update()
-        this.commands.update()
-        this.registry.update()
-        lastRun = now
-      }
       this.renderer.render(loop)
     })
+    let lastRun
   }
 
   destruct() {

@@ -16,9 +16,9 @@ export function getPixelRatio(context) {
   return deviceRatio / backingRatio
 }
 
-export function generateCanvas(width, height) {
+export function generateCanvas(width, height, id) {
   const canvas = document.createElement('canvas')
-  canvas.id = 'stage'
+  canvas.id = id
   const context = canvas.getContext('2d')
 
   const ratio = getPixelRatio(context)

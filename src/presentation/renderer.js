@@ -10,12 +10,12 @@ export default class Renderer {
 
     ctx.clearRect(0, 0, width, height)
 
-    background.render()
-
     if(showFPS) {
       ctx.font = '22px Arial'
       ctx.fillStyle = '#0b0'
-      ctx.fillText(Math.ceil(loopState.fps), width - 30, 24)
+      const fpsCounter = Math.ceil(loopState.fps)
+      const right = 15 * String(fpsCounter).length
+      ctx.fillText(fpsCounter, width - right, 24)
     }
 
     [...registry.entities].reverse().map(entity => {

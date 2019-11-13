@@ -11,7 +11,18 @@ body {
   background: #000000;
 }
 
-#stage {
+canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   margin: auto;
-  background: #ffffff;
+  transform: translate(-50%, -50%);
+}
+
+#background {
+  z-index: 1;
+}
+
+#stage {
+  z-index: 2;
 }
