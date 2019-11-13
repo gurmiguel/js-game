@@ -1,14 +1,15 @@
-export const keyCode = 38
+export const keyCode = 16
 
 export function handleOn(keysPressed) {
 
   return {
-    jump: true,
+    speedBoost: true,
   }
 }
 
 export function handleOff(keysPressed) {
+
   return {
-    jump: false,
+    speedBoost: false,
   }
 }

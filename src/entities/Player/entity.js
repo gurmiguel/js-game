@@ -37,7 +37,7 @@ export default class Player extends AbstractEntity {
     const isOnAir = this.position.y > 0
 
     if(input.speedBoost) {
-      this.moveSpeed = constants.moveSpeed * 1.8
+      this.moveSpeed = constants.moveSpeed * 3
     } else {
       this.moveSpeed = constants.moveSpeed
     }

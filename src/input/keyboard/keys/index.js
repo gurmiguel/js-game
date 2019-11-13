@@ -3,6 +3,7 @@ import * as right from './right'
 import * as down from './down'
 import * as left from './left'
 import * as spacebar from './spacebar'
+import * as shift from './shift'
 
 export {
   up,
@@ -10,4 +11,5 @@ export {
   down,
   left,
   spacebar,
+  shift,
 };
