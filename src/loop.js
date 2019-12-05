@@ -3,16 +3,26 @@ export default class Loop {
     this.app = app
     this.loopCallback = loopCallback
 
+    this.stopped = false
+
     this.initiateLoopState()
 
-    window.addEventListener('focus', () => {
-      cancelAnimationFrame(this.stop)
+    window.addEventListener('focus', this.onWindowFocus)
 
-      this.initiateLoopState()
-      this.main()
-    })
+    this.frameLoop = requestAnimationFrame(this.main)
+  }
 
-    this.stop = requestAnimationFrame(this.main)
+  onWindowFocus = () => {
+    cancelAnimationFrame(this.frameLoop)
+
+    this.initiateLoopState()
+    this.main()
+  }
+
+  stop() {
+    cancelAnimationFrame(this.frameLoop)
+    this.stopped = true
+    window.removeEventListener('focus', this.onWindowFocus)
   }
 
   initiateLoopState() {
@@ -41,7 +51,7 @@ export default class Loop {
   }
 
   main = (tframe) => {
-    this.stop = window.requestAnimationFrame(tframe => this.main(tframe))
+    this.frameLoop = requestAnimationFrame(tframe => this.main(tframe))
 
     const { loopState } = this
 

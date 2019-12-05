@@ -15,6 +15,8 @@ export default class Commands {
       'dive',
 
       'speedBoost',
+
+      'restart',
     ]
 
     this.queue = commands.reduce((keys, key) => ({[key]: false}), {})

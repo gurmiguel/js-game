@@ -15,4 +15,8 @@ export default class Background {
   render() {
     // this.doomfire.render()
   }
+
+  destruct() {
+    this.doomfire?.destruct?.()
+  }
 }

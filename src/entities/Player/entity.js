@@ -1,6 +1,7 @@
 import AbstractEntity from '../AbstractEntity'
 import constants from './constants'
 import Fruit from '../Fruit/entity'
+import Bullet from '../Bullet/entity'
 
 export default class Player extends AbstractEntity {
   constructor(app, x, y, width, height) {
@@ -10,6 +11,8 @@ export default class Player extends AbstractEntity {
     this.consecutiveJumps = 0
     this.score = 0
     this.moveSpeed = constants.moveSpeed
+
+    this.collisionInterval = requestAnimationFrame(() => this.collisionCheker())
   }
 
   render(context) {
@@ -86,16 +89,45 @@ export default class Player extends AbstractEntity {
     if(this.position.y === 0) {
       this.consecutiveJumps = 0
     }
+  }
+
+  collisionCheker() {
+    this.collisionInterval = requestAnimationFrame(() => this.collisionCheker())
+    const { registry, stopped } = this.app
+
+    if(stopped)
+      return
 
     registry.entities.forEach((entity, index) => {
-      if(!(entity instanceof Fruit))
-        return
       if(!this.collidesWith(entity))
         return
-      registry.entities.splice(index, 1)
-      if(!registry.entities.filter(entity => entity instanceof Fruit).length)
-        registry.generateFruit()
-      this.score += 1
+      if(entity instanceof Fruit) {
+        this.collideWithFruit(entity, index)
+      }
+      if(entity instanceof Bullet) {
+        this.collideWithBullet(entity)
+      }
     })
+  }
+
+  collideWithFruit(fruit, index) {
+    const { registry } = this.app
+
+    registry.entities.splice(index, 1)
+
+    if(!registry.entities.filter(entity => entity instanceof Fruit).length)
+      registry.generateFruit()
+
+    this.score += 1
+  }
+
+  collideWithBullet(bullet) {
+    const { registry } = this.app
+
+    this.app.stopped = true
+  }
+
+  destruct() {
+    cancelAnimationFrame(this.collisionInterval)
   }
 }

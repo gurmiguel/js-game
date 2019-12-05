@@ -1,6 +1,9 @@
+import uuid from 'uuid/v4'
+
 export default class AbstractEntity {
   constructor(app, x, y) {
     this.app = app
+    this.id = uuid()
     this.position = { x, y }
     this.width = 1
     this.height = 1

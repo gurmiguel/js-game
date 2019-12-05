@@ -78,11 +78,11 @@ export default class DoomFire {
     this.state.createFireData()
     this.state.createFireSource()
 
-    requestAnimationFrame(() => this.animationStep())
+    this.loop = requestAnimationFrame(() => this.animationStep())
   }
 
   animationStep() {
-    requestAnimationFrame(() => this.animationStep())
+    this.loop = requestAnimationFrame(() => this.animationStep())
     this.state.calculateFirePropagation()
     this.render()
   }
@@ -107,5 +107,9 @@ export default class DoomFire {
     })
 
     ctx.putImageData(this.backgroundImage, 0, world.height - this.height)
+  }
+
+  destruct() {
+    cancelAnimationFrame(this.loop)
   }
 }

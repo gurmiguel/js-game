@@ -47,6 +47,6 @@ export default class Fruit extends AbstractEntity {
     this.angle += constants.maxSpeed + randomFactor
 
     this.position.x = this.position.x.boundary(world.x, world.width - this.width)
-    this.position.y = this.position.y.boundary(world.x, world.height - this.height)
+    this.position.y = this.position.y.boundary(world.y, world.height - this.height)
   }
 }

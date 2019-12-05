@@ -4,6 +4,7 @@ import * as left from './left'
 import * as down from './down'
 import * as a from './a'
 import * as x from './x'
+import * as start from './start'
 
 export {
   up,
@@ -12,4 +13,5 @@ export {
   down,
   a,
   x,
+  start,
 }

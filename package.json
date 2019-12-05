@@ -15,5 +15,8 @@
   },
   "scripts": {
     "dev": "parcel index.html"
+  },
+  "dependencies": {
+    "uuid": "^3.3.3"
   }
 }
